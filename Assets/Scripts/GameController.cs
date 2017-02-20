@@ -8,10 +8,11 @@ public class GameController : MonoBehaviour {
 	public int marketTimerMax;
 	public float timercount;
 	public int score;
-	public int coints;
+	public static int coints;
 	public Text timerUI;
 	public Text scoreUI;
 	public Text cointsUI;
+
 
 	void Start () {
 		//CAPTURA DE ELEMENTOS UI
@@ -21,7 +22,7 @@ public class GameController : MonoBehaviour {
 
 		//PARAMETROS INICIAIS
 		this.marketTimer = marketTimerMax;
-		this.coints = 10;
+		coints = 15;
 		this.score = 0;
 
 	}

@@ -23,6 +23,7 @@ public class SeedScript : MonoBehaviour {
 			if (origin.GetComponent<SeedButton>().released) {
 				Destroy (this.gameObject);
 				if (other.GetComponent<PlantController> ().estagio <= 0) {
+					GameController.coints -= origin.GetComponent<SeedButton> ().seedCost;
 					other.GetComponent<PlantController> ().tipo = origin.GetComponent<SeedButton> ().tipo;
 					other.GetComponent<PlantController> ().Grow ();
 				}
