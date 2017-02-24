@@ -9,6 +9,8 @@ public class PlantController : MonoBehaviour {
 	public Image ScrollbarHandle;
 	public GameObject Bloqueio;
 	public Image PlantSprite;
+	public GameObject Canvas;
+	public GameObject FlyingCoin;
 
 	public Sprite[] MilhosSaudaveis;
 	public Sprite[] MilhosSecos;
@@ -111,6 +113,7 @@ public class PlantController : MonoBehaviour {
 			this.estagio = 0;
 			PlantSprite.sprite = MilhosSecos [estagio];
 			GameController.coints += this.valor;
+			StartCoroutine (FlyCoins());
 		} else {
 			completa = true;
 			Bloqueio.SetActive (true);
@@ -197,5 +200,13 @@ public class PlantController : MonoBehaviour {
 	IEnumerator Timer(){
 		yield return new WaitForSeconds(5);
 		PlantUpdate();
+	}
+
+	IEnumerator FlyCoins(){
+		Instantiate(FlyingCoin,this.transform.position,Quaternion.identity).transform.SetParent(Canvas.transform);
+		yield return new WaitForSeconds(0.1f);
+		Instantiate(FlyingCoin,this.transform.position,Quaternion.identity).transform.SetParent(Canvas.transform);
+		yield return new WaitForSeconds(0.1f);
+		Instantiate(FlyingCoin,this.transform.position,Quaternion.identity).transform.SetParent(Canvas.transform);
 	}
 }
