@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LoLSDK;
 
 public class PlantController : MonoBehaviour {
 
@@ -28,6 +29,11 @@ public class PlantController : MonoBehaviour {
 	public Sprite[] ViolasSecas;
 	public Sprite[] ViolasEncharcados;
 
+	public GameObject RegadorIco;
+	public GameObject TelhadoIco;
+	public GameObject AduboIco;
+
+
 	public float agua;
 	public float aguaMin;
 	public float aguaMax;
@@ -39,6 +45,7 @@ public class PlantController : MonoBehaviour {
 
 	public int tipo;
 	public int estagio;
+	public int crescimento;
 	public int chances;
 
 	public bool completa;
@@ -47,6 +54,7 @@ public class PlantController : MonoBehaviour {
 	void Start () {
 		this.estagio = 0;
 		this.ScrollbarHandle.color = Color.green;
+
 	}
 	
 	// Update is called once per frame
@@ -105,21 +113,24 @@ public class PlantController : MonoBehaviour {
 	public void PlantUpdate(){
 		completa = false;
 
-		if (this.estagio <= 5 && chances > 0) {
+		if (this.crescimento <= 5) {
 			
-		} else if (chances > 0) {
-			//PLANTA COMPLETA
-			completa = true;
-			this.estagio = 0;
-			PlantSprite.sprite = MilhosSecos [estagio];
-			GameController.coints += this.valor;
-			StartCoroutine (FlyCoins());
 		} else {
-			completa = true;
-			Bloqueio.SetActive (true);
-		}
+			//PLANTA COMPLETA
+			if (estagio == 6) {
+				GameController.coints += this.valor;
+				GameController.score += 20;
+				StartCoroutine (FlyCoinsFull());
+			} else {
+				GameController.coints += this.valor/2;
+				GameController.score += 10;
+				StartCoroutine (FlyCoinsLess());
+			}
 
-		this.Barra.size = (float)this.estagio / 7f;
+		} 
+
+		this.Barra.size = (float)this.crescimento / 7f;
+
 
 		if (completa == false) {
 			if (this.agua <= aguaMin || this.adubo <= aduboMin || this.sol >= solMax) { // Sofre Efeito de SECA ou SEM NUTRIENTES
@@ -140,8 +151,10 @@ public class PlantController : MonoBehaviour {
 					Debug.Log ("Tipo fora do Switch");
 					break;
 				}
+				this.crescimento++;
+				if(this.estagio>1)
 				this.estagio--;
-				chances--;
+//				chances--;
 				ScrollbarHandle.color = Color.red;
 			} else if (this.agua >= aguaMax) { 							// MUITA AGUA
 				switch (tipo) {
@@ -161,8 +174,10 @@ public class PlantController : MonoBehaviour {
 					Debug.Log ("Tipo fora do Switch");
 					break;
 				}
+				this.crescimento++;
+				if(this.estagio>1)
 				this.estagio --;
-				chances--;
+//				chances--;
 				ScrollbarHandle.color = Color.red;
 			} else {   													// PLANTA SAUDAVEL
 				switch (tipo) {
@@ -182,6 +197,7 @@ public class PlantController : MonoBehaviour {
 					Debug.Log ("Tipo fora do Switch");
 					break;
 				}
+				this.crescimento++;
 				this.estagio ++;
 				ScrollbarHandle.color = Color.green;
 			}
@@ -193,8 +209,33 @@ public class PlantController : MonoBehaviour {
 			sol += 15;
 			agua -= 15;
 			adubo -= 15;
+			CheckPlantStatus ();
 			StartCoroutine (Timer ());
 		} 
+	}
+
+	public void CheckPlantStatus(){
+		RegadorIco.SetActive (true);
+		if (this.agua <= aguaMin) {
+			RegadorIco.GetComponent<Image> ().color = new Color32 (130, 130, 130, 130);
+		} else {
+			RegadorIco.GetComponent<Image> ().color = new Color32 (255, 255, 255, 255);
+		}
+
+		AduboIco.SetActive (true);
+		if (this.adubo <= aduboMin) {
+			AduboIco.GetComponent<Image> ().color = new Color32 (130, 130, 130, 130);
+		} else {
+			AduboIco.GetComponent<Image> ().color = new Color32 (255, 255, 255, 255);
+		}
+
+		TelhadoIco.SetActive (true);
+		if (this.sol >= solMax) {
+			TelhadoIco.GetComponent<Image> ().color = new Color32 (130, 130, 130, 130);
+		} else {
+			TelhadoIco.GetComponent<Image> ().color = new Color32 (255, 255, 255, 255);
+		}
+			
 	}
 
 	IEnumerator Timer(){
@@ -202,11 +243,39 @@ public class PlantController : MonoBehaviour {
 		PlantUpdate();
 	}
 
-	IEnumerator FlyCoins(){
+	IEnumerator FlyCoinsFull(){
+		completa = true;
+		RegadorIco.SetActive (false);
+		AduboIco.SetActive (false);
+		TelhadoIco.SetActive (false);
+		ScrollbarHandle.color = Color.green;
+
+		yield return new WaitForSeconds(1f);
+		this.estagio = 0;
+		this.crescimento = 0;
+		this.Barra.size = (float)this.crescimento / 7f;
+		PlantSprite.sprite = MilhosSecos [estagio];
+
 		Instantiate(FlyingCoin,this.transform.position,Quaternion.identity).transform.SetParent(Canvas.transform);
 		yield return new WaitForSeconds(0.1f);
 		Instantiate(FlyingCoin,this.transform.position,Quaternion.identity).transform.SetParent(Canvas.transform);
 		yield return new WaitForSeconds(0.1f);
+		Instantiate(FlyingCoin,this.transform.position,Quaternion.identity).transform.SetParent(Canvas.transform);
+	}
+
+	IEnumerator FlyCoinsLess(){
+		completa = true;
+		RegadorIco.SetActive (false);
+		AduboIco.SetActive (false);
+		TelhadoIco.SetActive (false);
+		ScrollbarHandle.color = Color.green;
+
+		yield return new WaitForSeconds(2f);
+		this.estagio = 0;
+		this.crescimento = 0;
+		this.Barra.size = (float)this.crescimento / 7f;
+		PlantSprite.sprite = MilhosSecos [estagio];
+
 		Instantiate(FlyingCoin,this.transform.position,Quaternion.identity).transform.SetParent(Canvas.transform);
 	}
 }

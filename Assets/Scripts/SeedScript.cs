@@ -26,6 +26,7 @@ public class SeedScript : MonoBehaviour {
 					GameController.coints -= origin.GetComponent<SeedButton> ().seedCost;
 					other.GetComponent<PlantController> ().tipo = origin.GetComponent<SeedButton> ().tipo;
 					other.GetComponent<PlantController> ().Grow ();
+					other.GetComponent<PlantController> ().CheckPlantStatus ();
 				}
 			}
 		}
@@ -34,6 +35,7 @@ public class SeedScript : MonoBehaviour {
 				Destroy (this.gameObject);
 				if (other.GetComponent<PlantController> ().estagio >= 0) {
 					other.GetComponent<PlantController> ().agua += 15;
+					other.GetComponent<PlantController> ().CheckPlantStatus ();
 				}
 			}
 		}
@@ -42,6 +44,7 @@ public class SeedScript : MonoBehaviour {
 				Destroy (this.gameObject);
 				if (other.GetComponent<PlantController> ().estagio >= 0) {
 					other.GetComponent<PlantController> ().sol += 15;
+					other.GetComponent<PlantController> ().CheckPlantStatus ();
 				}
 			}
 		}
@@ -50,6 +53,7 @@ public class SeedScript : MonoBehaviour {
 				Destroy (this.gameObject);
 				if (other.GetComponent<PlantController> ().estagio >= 0) {
 					other.GetComponent<PlantController> ().adubo += 15;
+					other.GetComponent<PlantController> ().CheckPlantStatus ();
 				}
 			}
 		}

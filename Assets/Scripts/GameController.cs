@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LoLSDK;
 
 public class GameController : MonoBehaviour {
 	public int marketTimer;
 	public int marketTimerMax;
 	public float timercount;
-	public int score;
+	public static int score;
 	public static int coints;
 	public Text timerUI;
 	public Text scoreUI;
@@ -15,6 +16,9 @@ public class GameController : MonoBehaviour {
 
 
 	void Start () {
+
+		LOLSDK.Init ("com.ticjoy.jogodaplantinha");
+
 		//CAPTURA DE ELEMENTOS UI
 		timerUI = GameObject.Find ("TimeText").GetComponent<Text> ();
 		scoreUI = GameObject.Find ("ScoreText").GetComponent<Text> ();
@@ -23,7 +27,7 @@ public class GameController : MonoBehaviour {
 		//PARAMETROS INICIAIS
 		this.marketTimer = marketTimerMax;
 		coints = 15;
-		this.score = 0;
+		score = 0;
 
 	}
 
@@ -38,10 +42,15 @@ public class GameController : MonoBehaviour {
 			marketTimer = marketTimerMax;
 		}
 
+		if (this.marketTimer == 0) {
+			LOLSDK.Instance.CompleteGame();
+		}
+
 		//ATUALIZA UI
 		timerUI.text = marketTimer.ToString ();
 		scoreUI.text = score.ToString ();
 		cointsUI.text = coints.ToString ();
 
+		LOLSDK.Instance.SubmitProgress(0, score, 100);
 	}
 }
