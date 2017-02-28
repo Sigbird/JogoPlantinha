@@ -6,6 +6,7 @@ using LoLSDK;
 
 public class PlantController : MonoBehaviour {
 
+	public GameController Controller;
 	public Scrollbar Barra;	
 	public Image ScrollbarHandle;
 	public GameObject Bloqueio;
@@ -52,6 +53,7 @@ public class PlantController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Controller = GameObject.Find ("GameController").GetComponent<GameController> ();
 		this.estagio = 0;
 		this.ScrollbarHandle.color = Color.green;
 
@@ -117,7 +119,7 @@ public class PlantController : MonoBehaviour {
 			
 		} else {
 			//PLANTA COMPLETA
-			if (estagio == 6) {
+			if (estagio >= 6) {
 				GameController.coints += this.valor;
 				GameController.score += 20;
 				StartCoroutine (FlyCoinsFull());
@@ -126,7 +128,8 @@ public class PlantController : MonoBehaviour {
 				GameController.score += 10;
 				StartCoroutine (FlyCoinsLess());
 			}
-
+			LOLSDK.Instance.PlaySound("Planta_fica_completa.mp3", false, false);
+			LOLSDK.Instance.SubmitProgress (0, 0, 100);
 		} 
 
 		this.Barra.size = (float)this.crescimento / 7f;
@@ -206,9 +209,23 @@ public class PlantController : MonoBehaviour {
 
 
 		if (completa == false) { // INCREMENTO EM CADA TEMPO
-			sol += 15;
-			agua -= 15;
-			adubo -= 15;
+			if (Controller.seca == false) {
+				sol += 15;
+			} else {
+				sol += 30;
+				agua -= 15;
+			}
+
+			if (Controller.enchente == false) {
+				agua -= 15;
+			}
+
+			if (Controller.lixo == false) {
+				adubo -= 15;
+			}else{
+				adubo -= 30;
+				}
+
 			CheckPlantStatus ();
 			StartCoroutine (Timer ());
 		} 
@@ -239,7 +256,7 @@ public class PlantController : MonoBehaviour {
 	}
 
 	IEnumerator Timer(){
-		yield return new WaitForSeconds(5);
+		yield return new WaitForSeconds(Random.Range(8,11));
 		PlantUpdate();
 	}
 

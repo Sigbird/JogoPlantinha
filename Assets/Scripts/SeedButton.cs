@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LoLSDK;
 
 public class SeedButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
@@ -18,6 +19,8 @@ public class SeedButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 	public bool seedCreated;
 	public int seedCost;
 	public GameObject draggable;
+	public bool tutorialPlayed;
+	public GameObject[] tutorialImages;
 
 	public int tipo;
 
@@ -49,6 +52,7 @@ public class SeedButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 				draggable = (GameObject)Instantiate (seed, this.transform.position, Quaternion.identity);
 				draggable.transform.SetParent (GameObject.Find ("Canvas").transform);
 				draggable.GetComponent<SeedScript> ().origin = this.gameObject;
+				LOLSDK.Instance.PlaySound("Arrasta _recurso_p_planta.mp3", false, false);
 			}
 		}
 	}
@@ -60,7 +64,23 @@ public class SeedButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 //		if (draggable != null)
 //			Destroy (draggable.gameObject);
 		this.released = true;
+
+		LOLSDK.Instance.PlaySound("Arrasta _recurso_p_planta.mp3", false, false);
 		seedCreated = false;
+	}
+
+	public void StartTutorial(){
+		if (this.tutorialPlayed == false) {
+			StartCoroutine (PlayTutorial ());
+		}
+	}
+
+	IEnumerator PlayTutorial(){
+		yield return new WaitForSeconds (0.1f);
+		tutorialImages [tipo - 1].SetActive (true);
+		LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
+		Time.timeScale = 0;
+		this.tutorialPlayed = true;
 	}
 
 }

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using LoLSDK;
 
 public class ToolButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
@@ -18,6 +19,9 @@ public class ToolButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 	public bool toolCreated;
 	public int toolCost;
 	public GameObject draggable;
+
+	public bool tutorialPlayed;
+	public GameObject tutorialImages;
 
 
 	// Use this for initialization
@@ -60,6 +64,20 @@ public class ToolButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 		//			Destroy (draggable.gameObject);
 		this.released = true;
 		toolCreated = false;
+	}
+
+	public void StartTutorial(){
+		if (this.tutorialPlayed == false) {
+			StartCoroutine (PlayTutorial ());
+		}
+	}
+
+	IEnumerator PlayTutorial(){
+		yield return new WaitForSeconds (0.1f);
+		tutorialImages.SetActive (true);
+		LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
+		Time.timeScale = 0;
+		this.tutorialPlayed = true;
 	}
 
 }
