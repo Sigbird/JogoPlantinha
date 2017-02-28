@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
 
 	void Start () {
 
-		LOLSDK.Init ("com.ticjoy.jogodaplantinha");
+		//LOLSDK.Init ("com.ticjoy.jogodaplantinha");
 
 		//CAPTURA DE ELEMENTOS UI
 		timerUI = GameObject.Find ("TimeText").GetComponent<Text> ();
