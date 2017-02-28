@@ -74,7 +74,7 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 500;
 			this.adubo = 15;
-			this.valor = 20;
+			this.valor = 25;
 			break;
 		case 2:
 			//ATRIBUTOS GIRASSOL
@@ -83,7 +83,7 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 500;
 			this.adubo = 30;
-			this.valor = 25;
+			this.valor = 30;
 			break;
 		case 3:
 			//ATRIBUTOS TOMATE
@@ -92,7 +92,7 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 500;
 			this.adubo = 30;
-			this.valor = 40;
+			this.valor = 45;
 			break;
 		case 4:
 			//ATRIBUTOS VIOLAS
@@ -101,7 +101,7 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 500;
 			this.adubo = 45;
-			this.valor = 45;
+			this.valor = 50;
 			break;
 		default:
 			Debug.Log ("Tipo fora do Switch");
@@ -233,6 +233,18 @@ public class PlantController : MonoBehaviour {
 
 	public void CheckPlantStatus(){
 		RegadorIco.SetActive (true);
+		StartCoroutine (IconUpdateAgua());
+
+		AduboIco.SetActive (true);
+		StartCoroutine (IconUpdateAdubo());
+
+		TelhadoIco.SetActive (true);
+		StartCoroutine (IconUpdateTelhado());
+
+	}
+
+	public void UpdatePlantStatus(){
+		RegadorIco.SetActive (true);
 		if (this.agua <= aguaMin) {
 			RegadorIco.GetComponent<Image> ().color = new Color32 (130, 130, 130, 130);
 		} else {
@@ -252,11 +264,38 @@ public class PlantController : MonoBehaviour {
 		} else {
 			TelhadoIco.GetComponent<Image> ().color = new Color32 (255, 255, 255, 255);
 		}
-			
+	}
+
+	IEnumerator IconUpdateAgua(){
+		yield return new WaitForSeconds (Random.Range (0.2f, 4f));
+		if (this.agua <= aguaMin) {
+			RegadorIco.GetComponent<Image> ().color = new Color32 (130, 130, 130, 130);
+		} else {
+			RegadorIco.GetComponent<Image> ().color = new Color32 (255, 255, 255, 255);
+		}
+	}
+		
+	IEnumerator IconUpdateAdubo(){
+		yield return new WaitForSeconds(Random.Range(0.2f,4f));
+		if (this.adubo <= aduboMin) {
+			AduboIco.GetComponent<Image> ().color = new Color32 (130, 130, 130, 130);
+		} else {
+			AduboIco.GetComponent<Image> ().color = new Color32 (255, 255, 255, 255);
+		}
+	}
+
+	IEnumerator IconUpdateTelhado(){
+		yield return new WaitForSeconds(Random.Range(0.1f,4f));
+		if (this.sol >= solMax) {
+			TelhadoIco.GetComponent<Image> ().color = new Color32 (130, 130, 130, 130);
+		} else {
+			TelhadoIco.GetComponent<Image> ().color = new Color32 (255, 255, 255, 255);
+		}
+		
 	}
 
 	IEnumerator Timer(){
-		yield return new WaitForSeconds(Random.Range(8,11));
+		yield return new WaitForSeconds(Random.Range(11,15));
 		PlantUpdate();
 	}
 
