@@ -81,7 +81,7 @@ public class PlantController : MonoBehaviour {
 			this.agua = 15;
 			this.aguaMax = 30;
 			this.sol = 0;
-			this.solMax = 500;
+			this.solMax = 15;
 			this.adubo = 30;
 			this.valor = 30;
 			break;
@@ -90,16 +90,16 @@ public class PlantController : MonoBehaviour {
 			this.agua = 15;
 			this.aguaMax = 30;
 			this.sol = 0;
-			this.solMax = 500;
+			this.solMax = 30;
 			this.adubo = 30;
 			this.valor = 45;
 			break;
 		case 4:
 			//ATRIBUTOS VIOLAS
 			this.agua = 30;
-			this.aguaMax = 30;
+			this.aguaMax = 45;
 			this.sol = 0;
-			this.solMax = 500;
+			this.solMax = 15;
 			this.adubo = 45;
 			this.valor = 50;
 			break;

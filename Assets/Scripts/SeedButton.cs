@@ -46,7 +46,7 @@ public class SeedButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 		endPoint = eventData.position;
 
 		this.released = false;
-		if (seedCost <= GameController.coints) {
+		if (seedCost <= GameController.coints && Time.timeScale > 0) {
 			if (seedCreated == false) {
 				seedCreated = true;
 				draggable = (GameObject)Instantiate (seed, this.transform.position, Quaternion.identity);

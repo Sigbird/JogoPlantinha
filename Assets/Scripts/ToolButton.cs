@@ -46,7 +46,7 @@ public class ToolButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 		endPoint = eventData.position;
 
 		this.released = false;
-		if (toolCost <= GameController.coints) {
+		if (toolCost <= GameController.coints && Time.timeScale > 0) {
 			if (toolCreated == false) {
 				toolCreated = true;
 				draggable = (GameObject)Instantiate (tool, this.transform.position, Quaternion.identity);
