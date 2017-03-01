@@ -62,7 +62,7 @@ public class SeedScript : MonoBehaviour {
 			if (origin.GetComponent<ToolButton>().released && other.GetComponent<PlantController>() != null) {
 				Destroy (this.gameObject);
 				if (other.GetComponent<PlantController> ().estagio > 0) {
-					other.GetComponent<PlantController> ().sol += 15;
+					other.GetComponent<PlantController> ().sol -= 15;
 					other.GetComponent<PlantController> ().UpdatePlantStatus ();
 					origin.GetComponent<ToolButton> ().StartTutorial ();
 				}
