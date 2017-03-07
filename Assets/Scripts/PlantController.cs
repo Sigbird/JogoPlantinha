@@ -51,6 +51,7 @@ public class PlantController : MonoBehaviour {
 
 	public bool completa;
 
+
 	// Use this for initialization
 	void Start () {
 		Controller = GameObject.Find ("GameController").GetComponent<GameController> ();
@@ -61,7 +62,8 @@ public class PlantController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		//estagio
+
 	}
 
 	public void Grow(){
