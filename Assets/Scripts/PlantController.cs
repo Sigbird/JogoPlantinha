@@ -50,13 +50,24 @@ public class PlantController : MonoBehaviour {
 	public int chances;
 
 	public bool completa;
+	public bool primeiroMILHO;
+	public bool primeiroVIOLA;
+	public bool primeiroTOMATE;
+	public bool primeiroGIRASOL;
 
+
+	public int progress;
 
 	// Use this for initialization
 	void Start () {
+		LOLSDK.Instance.SubmitProgress(0, 0, 12);
 		Controller = GameObject.Find ("GameController").GetComponent<GameController> ();
 		this.estagio = 0;
 		this.ScrollbarHandle.color = Color.green;
+		primeiroMILHO = true;
+		primeiroVIOLA = true;
+		primeiroTOMATE = true;
+		primeiroGIRASOL = true;
 
 	}
 	
@@ -67,7 +78,7 @@ public class PlantController : MonoBehaviour {
 	}
 
 	public void Grow(){
-	
+
 		switch (tipo) {
 		case 1:
 			//ATRIBUTOS MILHO
@@ -77,6 +88,10 @@ public class PlantController : MonoBehaviour {
 			this.solMax = 500;
 			this.adubo = 15;
 			this.valor = 25;
+			if (primeiroMILHO) {
+				progress = progress + 1;
+			}
+			primeiroMILHO = false;
 			break;
 		case 2:
 			//ATRIBUTOS GIRASSOL
@@ -86,6 +101,10 @@ public class PlantController : MonoBehaviour {
 			this.solMax = 15;
 			this.adubo = 30;
 			this.valor = 30;
+			if (primeiroGIRASOL) {
+				progress = progress + 1;
+			}
+			primeiroGIRASOL = false;
 			break;
 		case 3:
 			//ATRIBUTOS TOMATE
@@ -95,6 +114,10 @@ public class PlantController : MonoBehaviour {
 			this.solMax = 30;
 			this.adubo = 30;
 			this.valor = 45;
+			if (primeiroTOMATE) {
+				progress = progress + 1;
+			}
+			primeiroTOMATE = false;
 			break;
 		case 4:
 			//ATRIBUTOS VIOLAS
@@ -104,6 +127,10 @@ public class PlantController : MonoBehaviour {
 			this.solMax = 15;
 			this.adubo = 45;
 			this.valor = 50;
+			if (primeiroVIOLA) {
+				progress = progress + 1;
+			}
+			primeiroVIOLA = false;
 			break;
 		default:
 			Debug.Log ("Tipo fora do Switch");
@@ -123,15 +150,17 @@ public class PlantController : MonoBehaviour {
 			//PLANTA COMPLETA
 			if (estagio >= 6) {
 				GameController.coints += this.valor;
-				GameController.score += 20;
+				GameController.score += 40;
+				progress = 1;
 				StartCoroutine (FlyCoinsFull());
 			} else {
 				GameController.coints += this.valor/2;
-				GameController.score += 10;
+				GameController.score += 20;
 				StartCoroutine (FlyCoinsLess());
 			}
 			LOLSDK.Instance.PlaySound("Planta_fica_completa.mp3", false, false);
-			LOLSDK.Instance.SubmitProgress (0, 0, 100);
+			LOLSDK.Instance.SubmitProgress (0, this.progress, 12);
+
 		} 
 
 		this.Barra.size = (float)this.crescimento / 7f;

@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour {
 	public bool secaTut;
 	public bool lixo;
 	public bool lixoTut;
+	public bool testador;
 	public GameObject[] tutorialImages;
 	public GameObject[] uiAvisos;
 
@@ -31,10 +32,12 @@ public class GameController : MonoBehaviour {
 
 	public GameObject tela_win;
 	public GameObject tela_loser;
-
+	public GameObject telahelp;
 	public float desastresCooldown;
 
 	void Start () {
+		//TELAS DE TURTORIAIS
+		telas();
 
 		//LOLSDK.Init ("com.ticjoy.jogodaplantinha");
 
@@ -53,7 +56,21 @@ public class GameController : MonoBehaviour {
 		coints = 20;
 		score = 0;
 
+		telahelp.SetActive (false);
+		Button helpButton = GameObject.Find ("helpButton").GetComponent<Button> ();
+		helpButton.onClick.AddListener (helpButtonStartClicked);
 
+	}
+
+	public void telas(){
+		if ((PlayerPrefs.GetInt ("turtoriais")) == 1) {
+			testador = true;
+			Debug.Log ("turtorial == 1");
+		} else {
+			Debug.Log ("turtorial == 2");
+
+			testador = false;
+		}			
 	}
 
 	void Update () {
@@ -87,9 +104,9 @@ public class GameController : MonoBehaviour {
 			seca = false;
 			enchente = false;
 			lixo = false;
-			uiAvisos [0].SetActive (false);
-			uiAvisos [1].SetActive (false);
-			uiAvisos [2].SetActive (false);
+			uiAvisos [0].SetActive (testador);
+			uiAvisos [1].SetActive (testador);
+			uiAvisos [2].SetActive (testador);
 		}
 		if (marketTimer < 2) {
 			if (score > 100) {
@@ -180,8 +197,8 @@ public class GameController : MonoBehaviour {
 		case 1:
 			enchente = true;
 			if (enchenteTut == false) {
-				tutorialImages [0].SetActive (true);
-				uiAvisos [0].SetActive (true);
+				tutorialImages [0].SetActive (testador);
+				uiAvisos [0].SetActive (testador);
 				LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
 				Time.timeScale = 0;
 				enchenteTut = true;
@@ -190,8 +207,8 @@ public class GameController : MonoBehaviour {
 		case 2:
 			seca = true;
 			if (secaTut == false) {
-				tutorialImages [1].SetActive (true);
-				uiAvisos [1].SetActive (true);
+				tutorialImages [1].SetActive (testador);
+				uiAvisos [1].SetActive (testador);
 				LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
 				Time.timeScale = 0;
 				secaTut = true;
@@ -200,8 +217,8 @@ public class GameController : MonoBehaviour {
 		case 3:
 			lixo = true;
 			if (lixoTut == false) {
-				tutorialImages [2].SetActive (true);
-				uiAvisos [2].SetActive (true);
+				tutorialImages [2].SetActive (testador);
+				uiAvisos [2].SetActive (testador);
 				LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
 				Time.timeScale = 0;
 				lixoTut = true;
@@ -218,6 +235,17 @@ public class GameController : MonoBehaviour {
 	public void reiniciarStartClicked(){
 		SceneManager.LoadScene ("Jogo");
 
+	}
+
+	public void helpButtonStartClicked(){
+		telahelp.SetActive (true);
+		Button vjButton = GameObject.Find ("vjButton").GetComponent<Button> ();
+		vjButton.onClick.AddListener (vjButtonStartClicked);
+		Time.timeScale = 0;
+	}
+	public void vjButtonStartClicked(){
+		telahelp.SetActive (false);
+		UnPause ();
 	}
 
 }

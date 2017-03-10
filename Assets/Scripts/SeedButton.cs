@@ -21,14 +21,19 @@ public class SeedButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 	public GameObject draggable;
 	public bool tutorialPlayed;
 	public GameObject[] tutorialImages;
+	public bool testador;
 
 	public int tipo;
 
 	// Use this for initialization
 	void Start () {
+		telas();
 		this.seedCreated = false;
 	}
-	
+
+	public void telas(){
+					
+	}
 	// Update is called once per frame
 	void Update () {
 		if (draggable != null)
@@ -70,10 +75,18 @@ public class SeedButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 	}
 
 	public void StartTutorial(){
-		if (this.tutorialPlayed == false) {
-			StartCoroutine (PlayTutorial ());
-		}
+		if ((PlayerPrefs.GetInt ("turtoriais")) == 1) {
+			if (this.tutorialPlayed == false) {
+				StartCoroutine (PlayTutorial ());
+			}
+		} else {
+			if (this.tutorialPlayed == true) {
+				//StartCoroutine (PlayTutorial ());
+			}		}
+
+
 	}
+
 
 	IEnumerator PlayTutorial(){
 		yield return new WaitForSeconds (0.1f);

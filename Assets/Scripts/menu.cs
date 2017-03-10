@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class menu : MonoBehaviour {
 	public AudioClip clip;
+	public Toggle myToggle;
 	// Use this for initialization
 	void Start () {
 		LOLSDK.Init ("com.ticjoy.jogodaplantinha");
@@ -17,9 +18,24 @@ public class menu : MonoBehaviour {
 //		this.GetComponent<AudioSource> ().Play();
 
 	}
+	void Update () {
+		if(myToggle.isOn) {
+			PlayerPrefs.SetInt("turtoriais", 1);
+		} else {
+			PlayerPrefs.SetInt("turtoriais", 0);
+
+		}
+	}
+
+
 		
 	public void playButtonStartClicked(){
-		SceneManager.LoadScene ("intro");
+		if ((PlayerPrefs.GetInt ("turtoriais")) == 1) {
+			SceneManager.LoadScene ("intro");
+		} else {
+			SceneManager.LoadScene ("Jogo");
+
+		}
 
 	}
 }

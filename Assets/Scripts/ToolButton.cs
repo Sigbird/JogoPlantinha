@@ -67,9 +67,15 @@ public class ToolButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 	}
 
 	public void StartTutorial(){
-		if (this.tutorialPlayed == false) {
-			StartCoroutine (PlayTutorial ());
-		}
+		if ((PlayerPrefs.GetInt ("turtoriais")) == 1) {
+			if (this.tutorialPlayed == false) {
+				StartCoroutine (PlayTutorial ());
+			}
+		} else {
+			if (this.tutorialPlayed == true) {
+				//StartCoroutine (PlayTutorial ());
+			}		}
+				
 	}
 
 	IEnumerator PlayTutorial(){

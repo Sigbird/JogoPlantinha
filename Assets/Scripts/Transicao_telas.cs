@@ -28,7 +28,7 @@ public class Transicao_telas : MonoBehaviour {
 		novaPosicao.z = 0;
 		//posicao do botao 
 		Posicao2 = transform.position;
-		Posicao2.x = 0.35f;
+		Posicao2.x = 3.8f;
 		Posicao2.y = -2.8f;
 		Posicao2.z = 0;
 
