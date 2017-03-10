@@ -104,9 +104,9 @@ public class GameController : MonoBehaviour {
 			seca = false;
 			enchente = false;
 			lixo = false;
-			uiAvisos [0].SetActive (testador);
-			uiAvisos [1].SetActive (testador);
-			uiAvisos [2].SetActive (testador);
+			uiAvisos [0].SetActive (false);
+			uiAvisos [1].SetActive (false);
+			uiAvisos [2].SetActive (false);
 		}
 		if (marketTimer < 2) {
 			if (score > 100) {
@@ -193,6 +193,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void TriggerDesastres(){
+		Destroy (GameObject.FindGameObjectWithTag ("draggable"));
 		switch (Random.Range(1,4)) {
 		case 1:
 			enchente = true;
