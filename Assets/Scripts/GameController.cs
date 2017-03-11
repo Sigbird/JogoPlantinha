@@ -25,6 +25,13 @@ public class GameController : MonoBehaviour {
 	public bool lixo;
 	public bool lixoTut;
 	public bool testador;
+	public bool FUllMILHO;
+	public bool FUllGIRASOL;
+	public bool FUllTOMATE;
+	public bool FUllVIOLA;
+	public bool jaPASSOU;
+	public bool jaPASSOU2;
+
 	public GameObject[] tutorialImages;
 	public GameObject[] uiAvisos;
 
@@ -33,6 +40,10 @@ public class GameController : MonoBehaviour {
 	public GameObject tela_win;
 	public GameObject tela_loser;
 	public GameObject telahelp;
+	public GameObject tela_win_full;
+	public GameObject tela_win_fulltime;
+	public GameObject tela_loser_fulltime;
+
 	public float desastresCooldown;
 
 	void Start () {
@@ -57,17 +68,27 @@ public class GameController : MonoBehaviour {
 		score = 0;
 
 		telahelp.SetActive (false);
+		tela_win_full.SetActive(false);
+		tela_win_fulltime.SetActive(false);
+		tela_loser_fulltime.SetActive (false);
+
 		Button helpButton = GameObject.Find ("helpButton").GetComponent<Button> ();
 		helpButton.onClick.AddListener (helpButtonStartClicked);
 
+		FUllMILHO = false;
+		FUllGIRASOL = false;
+		FUllTOMATE = false;
+		FUllVIOLA = false;
+		jaPASSOU = true;
+		jaPASSOU2 = true;
 	}
 
 	public void telas(){
 		if ((PlayerPrefs.GetInt ("turtoriais")) == 1) {
 			testador = true;
-			Debug.Log ("turtorial == 1");
+			//Debug.Log ("turtorial == 1");
 		} else {
-			Debug.Log ("turtorial == 2");
+			//Debug.Log ("turtorial == 2");
 
 			testador = false;
 		}			
@@ -108,83 +129,40 @@ public class GameController : MonoBehaviour {
 			uiAvisos [1].SetActive (false);
 			uiAvisos [2].SetActive (false);
 		}
-		if (marketTimer < 2) {
-			if (score > 100) {
-				tela_win.SetActive(true);
+		if (this.marketTimer < 2 & jaPASSOU2 == true) {
+			jaPASSOU2 = false;
+			//ACABOU O TEMPO E CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
+			if (FUllMILHO == true & FUllGIRASOL == true & FUllTOMATE == true & FUllVIOLA == true) {
+				tela_win_full.SetActive(true);
+				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
+				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
+				Time.timeScale = 0;
+			//ACABOU O TEMPO E NÃO CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
+			} else {
+				tela_loser_fulltime.SetActive(true);
 				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
 				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
 
 				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
 				reiniciar.onClick.AddListener (reiniciarStartClicked);
+			}
+			LOLSDK.Instance.CompleteGame ();
+			 
+		}
 
+		//TELA DE VITORIA PORQUE COMPLETOU OS 4 TIPOS DE PLANTAS FULL
+		if (FUllMILHO == true & FUllGIRASOL == true & FUllTOMATE == true & FUllVIOLA == true & jaPASSOU == true) {
+				jaPASSOU = false;
+				tela_win_full.SetActive(true);
 				scoreFinal = GameObject.Find ("scoreFinal").GetComponent<Text> ();
 				scoreFinal.text = score.ToString ();
-			} else {
-				tela_loser.SetActive(true);
-				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
+			Button nao = GameObject.Find ("nao").GetComponent<Button> ();
+			nao.onClick.AddListener (VoltarmenuStartClicked);
 
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
-			}
-		}
-		if (score > 200) {
-			tela_win.SetActive(true);
-			Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-			Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-			scoreFinal = GameObject.Find ("scoreFinal").GetComponent<Text> ();
-			scoreFinal.text = score.ToString ();
-		}
-		if (marketTimer < 140) {
-			if (score < 90) {
-				tela_loser.SetActive(true);
-				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
+			Button sim = GameObject.Find ("sim").GetComponent<Button> ();
+			sim.onClick.AddListener (voltarProJOGOStartClicked);
+				Time.timeScale = 0;
 
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
-			}
-		}
-		if (marketTimer < 240) {
-			if (score < 70) {//70
-				tela_loser.SetActive(true);
-				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
-			}
-		}
-		if (marketTimer < 330) {
-			if (score < 50) {//70
-				tela_loser.SetActive(true);
-				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
-			}
-		}
-		if (marketTimer < 440) {
-			if (score < 30) {//40
-				tela_loser.SetActive(true);
-				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
-			}
-		}
-		//APENAS TESTES
-		if (marketTimer < 490) {
-			if (score < 10) {//40
-				tela_loser.SetActive(true);
-				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
-			}
 		}
 	}
 
@@ -199,30 +177,52 @@ public class GameController : MonoBehaviour {
 			enchente = true;
 			if (enchenteTut == false) {
 				tutorialImages [0].SetActive (testador);
-				uiAvisos [0].SetActive (testador);
-				LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
-				Time.timeScale = 0;
-				enchenteTut = true;
+				uiAvisos [0].SetActive (true);
+				if (testador) {
+					LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
+				}
+				if (testador == true) {
+					Time.timeScale = 0;
+					enchenteTut = true;
+
+				} else {
+					Time.timeScale = 1;
+				}
+				//enchenteTut = true;
 			}
 			break;
 		case 2:
 			seca = true;
 			if (secaTut == false) {
 				tutorialImages [1].SetActive (testador);
-				uiAvisos [1].SetActive (testador);
-				LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
-				Time.timeScale = 0;
-				secaTut = true;
+				uiAvisos [1].SetActive (true);
+				if (testador) {
+					LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
+				}
+				if (testador == true) {
+					Time.timeScale = 0;
+					secaTut = true;
+				} else {
+					Time.timeScale = 1;
+				}
+				//secaTut = true;
 			}
 			break;
 		case 3:
 			lixo = true;
 			if (lixoTut == false) {
 				tutorialImages [2].SetActive (testador);
-				uiAvisos [2].SetActive (testador);
-				LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
-				Time.timeScale = 0;
-				lixoTut = true;
+				uiAvisos [2].SetActive (true);
+				if (testador) {
+					LOLSDK.Instance.PlaySound("Telas_educativa.mp3", false, false);
+				}
+				if (testador == true) {
+					Time.timeScale = 0;
+					lixoTut = true;
+				} else {
+					Time.timeScale = 1;
+				}
+				//lixoTut = true;
 			}
 			break;
 		default:
@@ -249,4 +249,9 @@ public class GameController : MonoBehaviour {
 		UnPause ();
 	}
 
+	public void voltarProJOGOStartClicked(){
+		//Debug.Log ("botao_voltarProJogo");
+		tela_win_full.SetActive (false);
+		UnPause ();
+	}
 }

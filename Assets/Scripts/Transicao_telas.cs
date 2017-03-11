@@ -61,12 +61,12 @@ public class Transicao_telas : MonoBehaviour {
 			SceneManager.LoadScene ("Jogo");
 			break;
 		default:
-			Debug.Log ("Tipo fora do Switch");
+			//Debug.Log ("Tipo fora do Switch");
 			break;
 		}
 	}
 	public void intro3StartClicked(){
-		Debug.Log ("teste");
+		//Debug.Log ("teste");
 
 	}
 

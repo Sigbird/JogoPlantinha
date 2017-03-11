@@ -54,7 +54,10 @@ public class PlantController : MonoBehaviour {
 	public bool primeiroVIOLA;
 	public bool primeiroTOMATE;
 	public bool primeiroGIRASOL;
-
+	public bool tipoFUllMILHO;
+	public bool tipoFUllGIRASOL;
+	public bool tipoFUllTOMATE;
+	public bool tipoFUllVIOLA;
 
 	public int progress;
 
@@ -68,13 +71,16 @@ public class PlantController : MonoBehaviour {
 		primeiroVIOLA = true;
 		primeiroTOMATE = true;
 		primeiroGIRASOL = true;
+		tipoFUllMILHO = false;
+		tipoFUllGIRASOL = false;
+		tipoFUllTOMATE = false;
+		tipoFUllVIOLA = false;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		//estagio
-
 	}
 
 	public void Grow(){
@@ -90,6 +96,8 @@ public class PlantController : MonoBehaviour {
 			this.valor = 25;
 			if (primeiroMILHO) {
 				progress = progress + 1;
+				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+
 			}
 			primeiroMILHO = false;
 			break;
@@ -103,6 +111,8 @@ public class PlantController : MonoBehaviour {
 			this.valor = 30;
 			if (primeiroGIRASOL) {
 				progress = progress + 1;
+				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+
 			}
 			primeiroGIRASOL = false;
 			break;
@@ -116,6 +126,8 @@ public class PlantController : MonoBehaviour {
 			this.valor = 45;
 			if (primeiroTOMATE) {
 				progress = progress + 1;
+				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+
 			}
 			primeiroTOMATE = false;
 			break;
@@ -129,11 +141,13 @@ public class PlantController : MonoBehaviour {
 			this.valor = 50;
 			if (primeiroVIOLA) {
 				progress = progress + 1;
+				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+
 			}
 			primeiroVIOLA = false;
 			break;
 		default:
-			Debug.Log ("Tipo fora do Switch");
+			//Debug.Log ("Tipo fora do Switch");
 			break;
 		}
 		this.chances = 2;
@@ -151,8 +165,28 @@ public class PlantController : MonoBehaviour {
 			if (estagio >= 6) {
 				GameController.coints += this.valor;
 				GameController.score += 40;
-				progress = 1;
+				//progress = 1;
 				StartCoroutine (FlyCoinsFull());
+				if (this.valor == 25 & tipoFUllMILHO == false) {
+					progress = progress + 1;
+					//Debug.Log ("concluiu um milho");
+					Controller.FUllMILHO = true;
+				}
+				if (this.valor == 30 & tipoFUllGIRASOL == false) {
+					progress = progress + 2;
+					//Debug.Log ("concluiu um Girasol");
+					Controller.FUllGIRASOL = true;
+				}
+				if (this.valor == 45 & tipoFUllTOMATE == false) {
+					progress = progress + 3;
+					//Debug.Log ("concluiu um tomate");
+					Controller.FUllTOMATE = true;
+				}
+				if (this.valor == 50 & tipoFUllVIOLA == false) {
+					progress = progress + 4;
+					//Debug.Log ("concluiu um viola");
+					Controller.FUllVIOLA = true;
+				}
 			} else {
 				GameController.coints += this.valor/2;
 				GameController.score += 20;
@@ -182,7 +216,7 @@ public class PlantController : MonoBehaviour {
 					PlantSprite.sprite = ViolasSecas [estagio];
 					break;
 				default:
-					Debug.Log ("Tipo fora do Switch");
+					//Debug.Log ("Tipo fora do Switch");
 					break;
 				}
 				this.crescimento++;
@@ -205,7 +239,7 @@ public class PlantController : MonoBehaviour {
 					PlantSprite.sprite = ViolasEncharcados [estagio];
 					break;
 				default:
-					Debug.Log ("Tipo fora do Switch");
+					//Debug.Log ("Tipo fora do Switch");
 					break;
 				}
 				this.crescimento++;
@@ -228,7 +262,7 @@ public class PlantController : MonoBehaviour {
 					PlantSprite.sprite = ViolasSaudaveis [estagio];
 					break;
 				default:
-					Debug.Log ("Tipo fora do Switch");
+					//Debug.Log ("Tipo fora do Switch");
 					break;
 				}
 				this.crescimento++;

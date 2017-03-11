@@ -46,7 +46,7 @@ public class SeedScript : MonoBehaviour {
 					origin.GetComponent<SeedButton> ().StartTutorial ();
 				}
 			}
-			Debug.Log (other.name);
+			//Debug.Log (other.name);
 		}
 		if (this.Nome == "Regador") {
 			if (origin.GetComponent<ToolButton>().released && other.GetComponent<PlantController>() != null) {
