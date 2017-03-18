@@ -59,11 +59,11 @@ public class PlantController : MonoBehaviour {
 	public bool tipoFUllTOMATE;
 	public bool tipoFUllVIOLA;
 
-	public int progress;
+	//public int progress;
 
 	// Use this for initialization
 	void Start () {
-		LOLSDK.Instance.SubmitProgress(0, 0, 12);
+		
 		Controller = GameObject.Find ("GameController").GetComponent<GameController> ();
 		this.estagio = 0;
 		this.ScrollbarHandle.color = Color.green;
@@ -93,10 +93,10 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 500;
 			this.adubo = 15;
-			this.valor = 25;
+			this.valor = 30;
 			if (primeiroMILHO) {
-				progress = progress + 1;
-				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+//				progress = progress + 1;
+//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
 
 			}
 			primeiroMILHO = false;
@@ -108,10 +108,10 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 15;
 			this.adubo = 30;
-			this.valor = 30;
+			this.valor = 35;
 			if (primeiroGIRASOL) {
-				progress = progress + 1;
-				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+//				progress = progress + 1;
+//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
 
 			}
 			primeiroGIRASOL = false;
@@ -125,8 +125,8 @@ public class PlantController : MonoBehaviour {
 			this.adubo = 30;
 			this.valor = 45;
 			if (primeiroTOMATE) {
-				progress = progress + 1;
-				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+//				progress = progress + 1;
+//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
 
 			}
 			primeiroTOMATE = false;
@@ -140,8 +140,8 @@ public class PlantController : MonoBehaviour {
 			this.adubo = 45;
 			this.valor = 50;
 			if (primeiroVIOLA) {
-				progress = progress + 1;
-				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
+//				progress = progress + 1;
+//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
 
 			}
 			primeiroVIOLA = false;
@@ -168,22 +168,26 @@ public class PlantController : MonoBehaviour {
 				//progress = 1;
 				StartCoroutine (FlyCoinsFull());
 				if (this.valor == 25 & tipoFUllMILHO == false) {
-					progress = progress + 1;
+					GameController.progress += 1;
+					//progress = progress + 1;
 					//Debug.Log ("concluiu um milho");
 					Controller.FUllMILHO = true;
 				}
 				if (this.valor == 30 & tipoFUllGIRASOL == false) {
-					progress = progress + 2;
+					GameController.progress += 2;
+					//progress = progress + 2;
 					//Debug.Log ("concluiu um Girasol");
 					Controller.FUllGIRASOL = true;
 				}
 				if (this.valor == 45 & tipoFUllTOMATE == false) {
-					progress = progress + 3;
+					GameController.progress += 3;
+					//progress = progress + 3;
 					//Debug.Log ("concluiu um tomate");
 					Controller.FUllTOMATE = true;
 				}
 				if (this.valor == 50 & tipoFUllVIOLA == false) {
-					progress = progress + 4;
+					GameController.progress += 4;
+					//progress = progress + 4;
 					//Debug.Log ("concluiu um viola");
 					Controller.FUllVIOLA = true;
 				}
@@ -193,8 +197,8 @@ public class PlantController : MonoBehaviour {
 				StartCoroutine (FlyCoinsLess());
 			}
 			LOLSDK.Instance.PlaySound("Planta_fica_completa.mp3", false, false);
-			LOLSDK.Instance.SubmitProgress (0, this.progress, 12);
-
+			//LOLSDK.Instance.SubmitProgress (0, this.progress, 12);
+			GameController.UpdateProgress();
 		} 
 
 		this.Barra.size = (float)this.crescimento / 7f;

@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour {
 	public int marketTimerMax;
 	public float timercount;
 	public static int score;
+	public static int progress;
+	public static int maxProgress;
 	public static int scorefinal;
 	public static int coints;
 	public Text timerUI;
@@ -49,7 +51,8 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		//TELAS DE TURTORIAIS
 		telas();
-
+		GameController.maxProgress = 12;
+		LOLSDK.Instance.SubmitProgress(0, 0, 12);
 		//LOLSDK.Init ("com.ticjoy.jogodaplantinha");
 
 		LOLSDK.Instance.StopSound ("Menu_e_zerada.mp3");
@@ -229,6 +232,11 @@ public class GameController : MonoBehaviour {
 			break;
 		}
 	}
+
+	public static void UpdateProgress(){
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+	}
+
 	public void VoltarmenuStartClicked(){
 		SceneManager.LoadScene ("voltar_menu");
 
