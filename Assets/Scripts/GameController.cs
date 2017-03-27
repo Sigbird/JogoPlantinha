@@ -11,10 +11,10 @@ public class GameController : MonoBehaviour {
 	public int marketTimerMax;
 	public float timercount;
 	public static int score;
-	public static int progress;
-	public static int maxProgress;
 	public static int scorefinal;
 	public static int coints;
+	public static int progress;
+	public static int maxProgress;
 	public Text timerUI;
 	public Text scoreUI;
 	public Text cointsUI;
@@ -31,7 +31,6 @@ public class GameController : MonoBehaviour {
 	public bool FUllGIRASOL;
 	public bool FUllTOMATE;
 	public bool FUllVIOLA;
-	public bool jaPASSOU;
 	public bool jaPASSOU2;
 
 	public GameObject[] tutorialImages;
@@ -45,20 +44,23 @@ public class GameController : MonoBehaviour {
 	public GameObject tela_win_full;
 	public GameObject tela_win_fulltime;
 	public GameObject tela_loser_fulltime;
+	public GameObject chekMILHO;
+	public GameObject chekGIRASOL;
+	public GameObject chekTOMATE;
+	public GameObject chekVIOLA;
+
 
 	public float desastresCooldown;
 
 	void Start () {
 		//TELAS DE TURTORIAIS
 		telas();
-		GameController.maxProgress = 12;
-		LOLSDK.Instance.SubmitProgress(0, 0, 12);
-		//LOLSDK.Init ("com.ticjoy.jogodaplantinha");
+		GameController.maxProgress = 19;
+		LOLSDK.Instance.SubmitProgress(0, 0, 19);
 
 		LOLSDK.Instance.StopSound ("Menu_e_zerada.mp3");
 		LOLSDK.Instance.PlaySound("Gameplay.mp3", true, true);
 		//ESTAGIO PLANTAS
-
 
 		//CAPTURA DE ELEMENTOS UI
 		timerUI = GameObject.Find ("TimeText").GetComponent<Text> ();
@@ -67,7 +69,7 @@ public class GameController : MonoBehaviour {
 
 		//PARAMETROS INICIAIS
 		this.marketTimer = marketTimerMax;
-		coints = 20;
+		coints = 15;
 		score = 0;
 
 		telahelp.SetActive (false);
@@ -82,17 +84,18 @@ public class GameController : MonoBehaviour {
 		FUllGIRASOL = false;
 		FUllTOMATE = false;
 		FUllVIOLA = false;
-		jaPASSOU = true;
 		jaPASSOU2 = true;
+
+		chekMILHO.SetActive (false);
+		chekGIRASOL.SetActive (false);
+		chekTOMATE.SetActive (false);
+		chekVIOLA.SetActive (false);
 	}
 
 	public void telas(){
 		if ((PlayerPrefs.GetInt ("turtoriais")) == 1) {
 			testador = true;
-			//Debug.Log ("turtorial == 1");
 		} else {
-			//Debug.Log ("turtorial == 2");
-
 			testador = false;
 		}			
 	}
@@ -134,11 +137,17 @@ public class GameController : MonoBehaviour {
 		}
 		if (this.marketTimer < 2 & jaPASSOU2 == true) {
 			jaPASSOU2 = false;
+
 			//ACABOU O TEMPO E CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
 			if (FUllMILHO == true & FUllGIRASOL == true & FUllTOMATE == true & FUllVIOLA == true) {
 				tela_win_full.SetActive(true);
+				scoreFinal = GameObject.Find ("scoreFinal").GetComponent<Text> ();
+				scoreFinal.text = score.ToString ();
 				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
 				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
+
+				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
+				reiniciar.onClick.AddListener (reiniciarStartClicked);
 				Time.timeScale = 0;
 			//ACABOU O TEMPO E NÃO CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
 			} else {
@@ -153,20 +162,6 @@ public class GameController : MonoBehaviour {
 			 
 		}
 
-		//TELA DE VITORIA PORQUE COMPLETOU OS 4 TIPOS DE PLANTAS FULL
-		if (FUllMILHO == true & FUllGIRASOL == true & FUllTOMATE == true & FUllVIOLA == true & jaPASSOU == true) {
-				jaPASSOU = false;
-				tela_win_full.SetActive(true);
-				scoreFinal = GameObject.Find ("scoreFinal").GetComponent<Text> ();
-				scoreFinal.text = score.ToString ();
-			Button nao = GameObject.Find ("nao").GetComponent<Button> ();
-			nao.onClick.AddListener (VoltarmenuStartClicked);
-
-			Button sim = GameObject.Find ("sim").GetComponent<Button> ();
-			sim.onClick.AddListener (voltarProJOGOStartClicked);
-				Time.timeScale = 0;
-
-		}
 	}
 
 	public void UnPause(){
@@ -238,12 +233,20 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void VoltarmenuStartClicked(){
+		LOLSDK.Instance.StopSound ("Gameplay.mp3");
+
+
 		SceneManager.LoadScene ("voltar_menu");
 
 	}
 	public void reiniciarStartClicked(){
-		SceneManager.LoadScene ("Jogo");
+		StartCoroutine (reiniciarfase());
+	}
 
+	IEnumerator reiniciarfase(){
+		LOLSDK.Instance.StopSound ("Gameplay.mp3");
+		yield return new WaitForSeconds(2);
+		SceneManager.LoadScene ("Jogo");
 	}
 
 	public void helpButtonStartClicked(){
@@ -258,7 +261,6 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void voltarProJOGOStartClicked(){
-		//Debug.Log ("botao_voltarProJogo");
 		tela_win_full.SetActive (false);
 		UnPause ();
 	}

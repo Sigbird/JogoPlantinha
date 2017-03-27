@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{25806509-DAA2-388A-2270-FAB3B46AE8A5}</ProjectGuid>
+    <ProjectGuid>{774286E9-B8F2-6F8E-DFB0-16CA4B60622A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -74,7 +74,7 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="LoLSDK">
- <HintPath>/Users/mayane/Desktop/JogoPlantinha/Assets/LoLSDK.dll</HintPath>
+ <HintPath>/Users/mayane/Downloads/JogoPlantinha 2/Assets/LoLSDK.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

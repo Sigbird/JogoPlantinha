@@ -50,27 +50,19 @@ public class PlantController : MonoBehaviour {
 	public int chances;
 
 	public bool completa;
-	public bool primeiroMILHO;
-	public bool primeiroVIOLA;
-	public bool primeiroTOMATE;
-	public bool primeiroGIRASOL;
 	public bool tipoFUllMILHO;
 	public bool tipoFUllGIRASOL;
 	public bool tipoFUllTOMATE;
 	public bool tipoFUllVIOLA;
+ 
 
 	//public int progress;
 
 	// Use this for initialization
 	void Start () {
-		
 		Controller = GameObject.Find ("GameController").GetComponent<GameController> ();
 		this.estagio = 0;
 		this.ScrollbarHandle.color = Color.green;
-		primeiroMILHO = true;
-		primeiroVIOLA = true;
-		primeiroTOMATE = true;
-		primeiroGIRASOL = true;
 		tipoFUllMILHO = false;
 		tipoFUllGIRASOL = false;
 		tipoFUllTOMATE = false;
@@ -78,9 +70,7 @@ public class PlantController : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		//estagio
 	}
 
 	public void Grow(){
@@ -94,12 +84,6 @@ public class PlantController : MonoBehaviour {
 			this.solMax = 500;
 			this.adubo = 15;
 			this.valor = 30;
-			if (primeiroMILHO) {
-//				progress = progress + 1;
-//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
-
-			}
-			primeiroMILHO = false;
 			break;
 		case 2:
 			//ATRIBUTOS GIRASSOL
@@ -108,13 +92,7 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 15;
 			this.adubo = 30;
-			this.valor = 35;
-			if (primeiroGIRASOL) {
-//				progress = progress + 1;
-//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
-
-			}
-			primeiroGIRASOL = false;
+			this.valor = 40;
 			break;
 		case 3:
 			//ATRIBUTOS TOMATE
@@ -123,13 +101,7 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 30;
 			this.adubo = 30;
-			this.valor = 45;
-			if (primeiroTOMATE) {
-//				progress = progress + 1;
-//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
-
-			}
-			primeiroTOMATE = false;
+			this.valor = 60;
 			break;
 		case 4:
 			//ATRIBUTOS VIOLAS
@@ -138,16 +110,9 @@ public class PlantController : MonoBehaviour {
 			this.sol = 0;
 			this.solMax = 15;
 			this.adubo = 45;
-			this.valor = 50;
-			if (primeiroVIOLA) {
-//				progress = progress + 1;
-//				LOLSDK.Instance.SubmitProgress(0, this.progress, 14);
-
-			}
-			primeiroVIOLA = false;
+			this.valor = 70;
 			break;
 		default:
-			//Debug.Log ("Tipo fora do Switch");
 			break;
 		}
 		this.chances = 2;
@@ -159,37 +124,37 @@ public class PlantController : MonoBehaviour {
 		completa = false;
 
 		if (this.crescimento <= 5) {
-			
 		} else {
 			//PLANTA COMPLETA
 			if (estagio >= 6) {
 				GameController.coints += this.valor;
 				GameController.score += 40;
-				//progress = 1;
 				StartCoroutine (FlyCoinsFull());
-				if (this.valor == 25 & tipoFUllMILHO == false) {
+
+				if (this.valor == 30 & tipoFUllMILHO == false) {
 					GameController.progress += 1;
-					//progress = progress + 1;
-					//Debug.Log ("concluiu um milho");
 					Controller.FUllMILHO = true;
+					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
+					Controller.chekMILHO.SetActive (true);
 				}
-				if (this.valor == 30 & tipoFUllGIRASOL == false) {
+				if (this.valor == 40 & tipoFUllGIRASOL == false) {
 					GameController.progress += 2;
-					//progress = progress + 2;
-					//Debug.Log ("concluiu um Girasol");
 					Controller.FUllGIRASOL = true;
+					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
+					Controller.chekGIRASOL.SetActive (true);
 				}
-				if (this.valor == 45 & tipoFUllTOMATE == false) {
+				if (this.valor == 60 & tipoFUllTOMATE == false) {
 					GameController.progress += 3;
-					//progress = progress + 3;
-					//Debug.Log ("concluiu um tomate");
 					Controller.FUllTOMATE = true;
+					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
+					Controller.chekTOMATE.SetActive (true);
 				}
-				if (this.valor == 50 & tipoFUllVIOLA == false) {
+
+				if (this.valor == 70 & tipoFUllVIOLA == false) {
 					GameController.progress += 4;
-					//progress = progress + 4;
-					//Debug.Log ("concluiu um viola");
 					Controller.FUllVIOLA = true;
+					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
+					Controller.chekVIOLA.SetActive (true);
 				}
 			} else {
 				GameController.coints += this.valor/2;
@@ -197,12 +162,10 @@ public class PlantController : MonoBehaviour {
 				StartCoroutine (FlyCoinsLess());
 			}
 			LOLSDK.Instance.PlaySound("Planta_fica_completa.mp3", false, false);
-			//LOLSDK.Instance.SubmitProgress (0, this.progress, 12);
 			GameController.UpdateProgress();
 		} 
 
 		this.Barra.size = (float)this.crescimento / 7f;
-
 
 		if (completa == false) {
 			if (this.agua <= aguaMin || this.adubo <= aduboMin || this.sol >= solMax) { // Sofre Efeito de SECA ou SEM NUTRIENTES
@@ -220,7 +183,6 @@ public class PlantController : MonoBehaviour {
 					PlantSprite.sprite = ViolasSecas [estagio];
 					break;
 				default:
-					//Debug.Log ("Tipo fora do Switch");
 					break;
 				}
 				this.crescimento++;
@@ -228,7 +190,7 @@ public class PlantController : MonoBehaviour {
 				this.estagio--;
 //				chances--;
 				ScrollbarHandle.color = Color.red;
-			} else if (this.agua >= aguaMax) { 							// MUITA AGUA
+			} else if (this.agua >= aguaMax) { 	// MUITA AGUA
 				switch (tipo) {
 				case 1:
 					PlantSprite.sprite = MilhosEncharcados [estagio];
@@ -243,7 +205,6 @@ public class PlantController : MonoBehaviour {
 					PlantSprite.sprite = ViolasEncharcados [estagio];
 					break;
 				default:
-					//Debug.Log ("Tipo fora do Switch");
 					break;
 				}
 				this.crescimento++;
@@ -251,7 +212,7 @@ public class PlantController : MonoBehaviour {
 				this.estagio --;
 //				chances--;
 				ScrollbarHandle.color = Color.red;
-			} else {   													// PLANTA SAUDAVEL
+			} else {   // PLANTA SAUDAVEL
 				switch (tipo) {
 				case 1:
 					PlantSprite.sprite = MilhosSaudaveis [estagio];
@@ -266,7 +227,6 @@ public class PlantController : MonoBehaviour {
 					PlantSprite.sprite = ViolasSaudaveis [estagio];
 					break;
 				default:
-					//Debug.Log ("Tipo fora do Switch");
 					break;
 				}
 				this.crescimento++;

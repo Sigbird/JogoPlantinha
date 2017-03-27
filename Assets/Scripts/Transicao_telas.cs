@@ -47,10 +47,15 @@ public class Transicao_telas : MonoBehaviour {
 			break;
 		case 2:
 			intro = 3;
-			botao01.transform.position = novaPosicao;
+			botao01.transform.position = Posicao2;
 			intro02.SetActive(false);
 			intro03.SetActive(true);
 			break;
+			//intro = 3;
+			//botao01.transform.position = novaPosicao;
+			//intro02.SetActive(false);
+			//intro03.SetActive(true);
+			//break;
 		case 3:
 			intro = 4;
 			botao01.transform.position = Posicao2;
