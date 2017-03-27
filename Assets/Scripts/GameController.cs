@@ -117,11 +117,9 @@ public class GameController : MonoBehaviour {
 			minutecount = 0;
 			GameController.progress += 1;
 			LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+			//Debug.Log ("progresso"+progress);
 		}
-
-		if (this.marketTimer == 0) {
-			//LOLSDK.Instance.CompleteGame ();
-		}
+			
 
 		//ATUALIZA UI
 		timerUI.text = marketTimer.ToString ();
@@ -148,14 +146,12 @@ public class GameController : MonoBehaviour {
 
 			//ACABOU O TEMPO E CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
 			if (FUllMILHO == true & FUllGIRASOL == true & FUllTOMATE == true & FUllVIOLA == true) {
+					
 				tela_win_full.SetActive(true);
 				scoreFinal = GameObject.Find ("scoreFinal").GetComponent<Text> ();
 				scoreFinal.text = score.ToString ();
 				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
 				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
 				Time.timeScale = 0;
 			//ACABOU O TEMPO E NÃO CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
 			} else {
@@ -163,10 +159,9 @@ public class GameController : MonoBehaviour {
 				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
 				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
 
-				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
-				reiniciar.onClick.AddListener (reiniciarStartClicked);
+				Time.timeScale = 0;
+
 			}
-			//LOLSDK.Instance.CompleteGame ();
 			 
 		}
 
@@ -194,7 +189,6 @@ public class GameController : MonoBehaviour {
 				} else {
 					Time.timeScale = 1;
 				}
-				//enchenteTut = true;
 			}
 			break;
 		case 2:
@@ -228,7 +222,6 @@ public class GameController : MonoBehaviour {
 				} else {
 					Time.timeScale = 1;
 				}
-				//lixoTut = true;
 			}
 			break;
 		default:
@@ -241,9 +234,8 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void VoltarmenuStartClicked(){
+		LOLSDK.Instance.CompleteGame ();
 		LOLSDK.Instance.StopSound ("Gameplay.mp3");
-
-
 		SceneManager.LoadScene ("voltar_menu");
 
 	}
