@@ -152,9 +152,8 @@ public class GameController : MonoBehaviour {
 			//ACABOU O TEMPO E NÃO CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
 			} else {
 				tela_loser_fulltime.SetActive(true);
-				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-
+				Button Voltarmenu = GameObject.Find ("VoltarmenuOver").GetComponent<Button> ();
+				Voltarmenu.onClick.AddListener (VoltarmenuOverStartClicked);
 				Time.timeScale = 0;
 
 			}
@@ -224,10 +223,7 @@ public class GameController : MonoBehaviour {
 			break;
 		}
 	}
-
-	//public void CompleteGame(){
-	//	LOLSDK.Instance.CompleteGame ();
-	//}
+		
 
 	public void VoltarmenuStartClicked(){
 		LOLSDK.Instance.CompleteGame ();
@@ -235,14 +231,11 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene ("voltar_menu");
 
 	}
-	public void reiniciarStartClicked(){
-		StartCoroutine (reiniciarfase());
-	}
 
-	IEnumerator reiniciarfase(){
+	public void VoltarmenuOverStartClicked(){
 		LOLSDK.Instance.StopSound ("Gameplay.mp3");
-		yield return new WaitForSeconds(2);
-		SceneManager.LoadScene ("Jogo");
+		SceneManager.LoadScene ("voltar_menu");
+
 	}
 
 	public void helpButtonStartClicked(){
@@ -251,6 +244,7 @@ public class GameController : MonoBehaviour {
 		vjButton.onClick.AddListener (vjButtonStartClicked);
 		Time.timeScale = 0;
 	}
+
 	public void vjButtonStartClicked(){
 		telahelp.SetActive (false);
 		UnPause ();
