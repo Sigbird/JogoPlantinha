@@ -39,11 +39,8 @@ public class GameController : MonoBehaviour {
 
 	public Vector3 novaPosicao;
 
-	public GameObject tela_win;
-	public GameObject tela_loser;
 	public GameObject telahelp;
 	public GameObject tela_win_full;
-	public GameObject tela_win_fulltime;
 	public GameObject tela_loser_fulltime;
 	public GameObject chekMILHO;
 	public GameObject chekGIRASOL;
@@ -75,7 +72,6 @@ public class GameController : MonoBehaviour {
 
 		telahelp.SetActive (false);
 		tela_win_full.SetActive(false);
-		tela_win_fulltime.SetActive(false);
 		tela_loser_fulltime.SetActive (false);
 
 		Button helpButton = GameObject.Find ("helpButton").GetComponent<Button> ();
@@ -229,9 +225,9 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public void CompleteGame(){
-		LOLSDK.Instance.CompleteGame ();
-	}
+	//public void CompleteGame(){
+	//	LOLSDK.Instance.CompleteGame ();
+	//}
 
 	public void VoltarmenuStartClicked(){
 		LOLSDK.Instance.CompleteGame ();
