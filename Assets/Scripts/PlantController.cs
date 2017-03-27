@@ -132,26 +132,26 @@ public class PlantController : MonoBehaviour {
 				StartCoroutine (FlyCoinsFull());
 
 				if (this.valor == 30 & tipoFUllMILHO == false) {
-					GameController.progress += 1;
+					//GameController.progress += 1;
 					Controller.FUllMILHO = true;
 					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
 					Controller.chekMILHO.SetActive (true);
 				}
 				if (this.valor == 40 & tipoFUllGIRASOL == false) {
-					GameController.progress += 2;
+					//GameController.progress += 2;
 					Controller.FUllGIRASOL = true;
 					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
 					Controller.chekGIRASOL.SetActive (true);
 				}
 				if (this.valor == 60 & tipoFUllTOMATE == false) {
-					GameController.progress += 3;
+					//GameController.progress += 3;
 					Controller.FUllTOMATE = true;
 					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
 					Controller.chekTOMATE.SetActive (true);
 				}
 
 				if (this.valor == 70 & tipoFUllVIOLA == false) {
-					GameController.progress += 4;
+					//GameController.progress += 4;
 					Controller.FUllVIOLA = true;
 					//LOLSDK.Instance.SubmitProgress (0, this.progress, 10);
 					Controller.chekVIOLA.SetActive (true);
@@ -162,7 +162,7 @@ public class PlantController : MonoBehaviour {
 				StartCoroutine (FlyCoinsLess());
 			}
 			LOLSDK.Instance.PlaySound("Planta_fica_completa.mp3", false, false);
-			GameController.UpdateProgress();
+			//GameController.UpdateProgress();
 		} 
 
 		this.Barra.size = (float)this.crescimento / 7f;

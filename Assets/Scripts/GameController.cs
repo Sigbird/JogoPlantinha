@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 	public int marketTimer;
 	public int marketTimerMax;
 	public float timercount;
+	public float minutecount;
 	public static int score;
 	public static int scorefinal;
 	public static int coints;
@@ -56,7 +57,7 @@ public class GameController : MonoBehaviour {
 		//TELAS DE TURTORIAIS
 		telas();
 		GameController.maxProgress = 19;
-		LOLSDK.Instance.SubmitProgress(0, 0, 19);
+		LOLSDK.Instance.SubmitProgress(0, 0, 10);
 
 		LOLSDK.Instance.StopSound ("Menu_e_zerada.mp3");
 		LOLSDK.Instance.PlaySound("Gameplay.mp3", true, true);
@@ -103,6 +104,7 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		//CONTROLE TEMPO DO MERCADO
 		timercount += Time.deltaTime;
+		minutecount += Time.deltaTime;
 		if (timercount > 1) {
 			timercount = 0;
 			marketTimer -= 1;
@@ -111,8 +113,14 @@ public class GameController : MonoBehaviour {
 			marketTimer = marketTimerMax;
 		}
 
+		if (minutecount >= 60) {
+			minutecount = 0;
+			GameController.progress += 1;
+			LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+		}
+
 		if (this.marketTimer == 0) {
-			LOLSDK.Instance.CompleteGame ();
+			//LOLSDK.Instance.CompleteGame ();
 		}
 
 		//ATUALIZA UI
@@ -158,7 +166,7 @@ public class GameController : MonoBehaviour {
 				Button reiniciar = GameObject.Find ("reiniciar").GetComponent<Button> ();
 				reiniciar.onClick.AddListener (reiniciarStartClicked);
 			}
-			LOLSDK.Instance.CompleteGame ();
+			//LOLSDK.Instance.CompleteGame ();
 			 
 		}
 
@@ -228,8 +236,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	public static void UpdateProgress(){
-		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+	public void CompleteGame(){
+		LOLSDK.Instance.CompleteGame ();
 	}
 
 	public void VoltarmenuStartClicked(){
