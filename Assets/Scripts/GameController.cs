@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour {
 	void Start () {
 		//TELAS DE TURTORIAIS
 		telas();
-		GameController.maxProgress = 19;
+		GameController.maxProgress = 10;
 		LOLSDK.Instance.SubmitProgress(0, 0, 10);
 
 		LOLSDK.Instance.StopSound ("Menu_e_zerada.mp3");
