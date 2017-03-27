@@ -148,13 +148,13 @@ public class GameController : MonoBehaviour {
 				scoreFinal.text = score.ToString ();
 				Button Voltarmenu = GameObject.Find ("Voltarmenu").GetComponent<Button> ();
 				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
-				Time.timeScale = 0;
+				//Time.timeScale = 0;
 			//ACABOU O TEMPO E NÃO CONSEGUIU FAZER OS 4 TIPOS DE PLANTAS
 			} else {
 				tela_loser_fulltime.SetActive(true);
 				Button Voltarmenu = GameObject.Find ("VoltarmenuOver").GetComponent<Button> ();
 				Voltarmenu.onClick.AddListener (VoltarmenuOverStartClicked);
-				Time.timeScale = 0;
+				//Time.timeScale = 0;
 
 			}
 			 
