@@ -51,6 +51,7 @@ public class GameController : MonoBehaviour {
 	public float desastresCooldown;
 
 	void Start () {
+		StartCoroutine (implementProgress ());
 		//TELAS DE TURTORIAIS
 		telas();
 		GameController.maxProgress = 10;
@@ -111,8 +112,8 @@ public class GameController : MonoBehaviour {
 
 		if (minutecount >= 60) {
 			minutecount = 0;
-			GameController.progress += 1;
-			LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+			//GameController.progress += 1;
+			//LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
 			//Debug.Log ("progresso"+progress);
 		}
 			
@@ -153,12 +154,13 @@ public class GameController : MonoBehaviour {
 			} else {
 				tela_loser_fulltime.SetActive(true);
 				Button Voltarmenu = GameObject.Find ("VoltarmenuOver").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
+				Voltarmenu.onClick.AddListener (VoltarmenuOverStartClicked);
 				//Time.timeScale = 0;
 
 			}
 			 
 		}
+
 
 	}
 
@@ -231,6 +233,11 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene ("voltar_menu");
 
 	}
+	public void VoltarmenuOverStartClicked(){
+		LOLSDK.Instance.StopSound ("Gameplay.mp3");
+		SceneManager.LoadScene ("voltar_menu");
+
+	}
 
 	public void helpButtonStartClicked(){
 		telahelp.SetActive (true);
@@ -248,4 +255,48 @@ public class GameController : MonoBehaviour {
 		tela_win_full.SetActive (false);
 		UnPause ();
 	}
+
+	IEnumerator implementProgress(){
+		yield return new WaitForSeconds (62);
+		GameController.progress = 1;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 2;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 3;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 4;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 5;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 6;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 7;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 8;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 9;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+		yield return new WaitForSeconds (60);
+		GameController.progress = 10;
+		LOLSDK.Instance.SubmitProgress(GameController.score, GameController.progress, GameController.maxProgress);
+
+	}
 }
+
