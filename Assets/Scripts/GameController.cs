@@ -153,7 +153,7 @@ public class GameController : MonoBehaviour {
 			} else {
 				tela_loser_fulltime.SetActive(true);
 				Button Voltarmenu = GameObject.Find ("VoltarmenuOver").GetComponent<Button> ();
-				Voltarmenu.onClick.AddListener (VoltarmenuOverStartClicked);
+				Voltarmenu.onClick.AddListener (VoltarmenuStartClicked);
 				//Time.timeScale = 0;
 
 			}
@@ -227,12 +227,6 @@ public class GameController : MonoBehaviour {
 
 	public void VoltarmenuStartClicked(){
 		LOLSDK.Instance.CompleteGame ();
-		LOLSDK.Instance.StopSound ("Gameplay.mp3");
-		SceneManager.LoadScene ("voltar_menu");
-
-	}
-
-	public void VoltarmenuOverStartClicked(){
 		LOLSDK.Instance.StopSound ("Gameplay.mp3");
 		SceneManager.LoadScene ("voltar_menu");
 
